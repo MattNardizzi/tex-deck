@@ -3,8 +3,7 @@ import Orb from '../Orb.jsx';
 import './SlideAsk.css';
 
 /* Slide 8 — Ask, part two.
-   "Intros to investors / who want to set the stage / for the
-   regulated AI era."
+   Matches SlideAskOne in proportion. Two lines, not three.
 */
 export default function SlideAskTwo({ active }) {
   const [armed, setArmed] = useState(false);
@@ -23,11 +22,9 @@ export default function SlideAskTwo({ active }) {
         </div>
 
         <p className="tex-ask-line">
-          <span className="tex-ask-beat tex-ask-beat--1">Intros to investors</span>
+          <span className="tex-ask-beat tex-ask-beat--1">Intros to investors who set the stage</span>
           <br />
-          <span className="tex-ask-beat tex-ask-beat--2">who want to set the stage</span>
-          <br />
-          <span className="tex-ask-beat tex-ask-beat--3">
+          <span className="tex-ask-beat tex-ask-beat--2">
             <em>for the regulated AI era.</em>
           </span>
         </p>
