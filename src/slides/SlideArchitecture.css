@@ -14,26 +14,19 @@
   text-align: center;
   width: 100%;
   max-width: 720px;
-  gap: 40px;
 }
 
 .tex-arch-title {
   font-family: var(--tex-serif);
   font-weight: 400;
-  font-size: clamp(24px, 2.6vw, 34px);
+  font-size: clamp(24px, 2.6vw, 36px);
   line-height: 1.3;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.014em;
   color: var(--tex-ink);
-  margin: 0;
+  margin: 0 0 56px 0;
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 1.0s ease 0.4s, transform 1.0s ease 0.4s;
-}
-
-.tex-arch-title em {
-  font-style: italic;
-  font-weight: 300;
-  color: var(--tex-ink-soft);
+  transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
 }
 
 .tex-arch--armed .tex-arch-title {
@@ -41,99 +34,60 @@
   transform: translateY(0);
 }
 
-/* The stack — a real visual column */
 .tex-arch-stack {
   width: 100%;
-  max-width: 600px;
+  max-width: 560px;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--tex-ink-hair);
-  border-radius: 2px;
-  background: var(--tex-paper);
-  overflow: hidden;
-  box-shadow:
-    0 1px 0 rgba(20, 17, 13, 0.02),
-    0 12px 32px -8px rgba(20, 17, 13, 0.08);
+  margin-bottom: 56px;
 }
 
-/* Each layer is a horizontal bar */
 .tex-arch-row {
   display: grid;
-  grid-template-columns: 44px 1px 1fr auto;
-  align-items: center;
-  gap: 18px;
-  padding: 14px 22px;
-  border-bottom: 1px solid var(--tex-ink-hair);
-  background: var(--tex-paper);
+  grid-template-columns: 160px 1fr;
+  align-items: baseline;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--tex-ink-hair);
   text-align: left;
   opacity: 0;
-  transform: translateX(-4px);
+  transform: translateY(4px);
   transition: opacity 0.85s ease, transform 0.85s ease;
 }
 
-.tex-arch-row:last-child { border-bottom: none; }
-
-/* Top row is the artifact that leaves — emphasized */
-.tex-arch-row--top {
-  background: var(--tex-paper-2);
+.tex-arch-row:last-child {
+  border-bottom: 1px solid var(--tex-ink-hair);
 }
 
 .tex-arch--armed .tex-arch-row {
   opacity: 1;
-  transform: translateX(0);
-}
-
-.tex-arch-num {
-  font-family: var(--tex-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--tex-ink-mute);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Vertical spine — the chain */
-.tex-arch-spine {
-  width: 1px;
-  height: 16px;
-  background: var(--tex-ink-hair);
-  align-self: center;
-}
-
-.tex-arch-row--top .tex-arch-spine {
-  background: var(--tex-ink);
-  opacity: 0.6;
+  transform: translateY(0);
 }
 
 .tex-arch-name {
-  font-family: var(--tex-serif);
-  font-weight: 400;
-  font-size: 17px;
-  letter-spacing: -0.008em;
+  font-family: var(--tex-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
   color: var(--tex-ink);
-}
-
-.tex-arch-row--top .tex-arch-name {
-  font-weight: 500;
 }
 
 .tex-arch-desc {
   font-family: var(--tex-serif);
   font-weight: 300;
   font-style: italic;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: -0.005em;
   color: var(--tex-ink-soft);
-  white-space: nowrap;
+  text-align: right;
 }
 
 .tex-arch-aside {
   font-family: var(--tex-serif);
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 400;
+  font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.5;
-  letter-spacing: -0.005em;
-  color: var(--tex-ink-soft);
+  letter-spacing: -0.008em;
+  color: var(--tex-ink);
   margin: 0;
   opacity: 0;
   transition: opacity 1.4s ease 2.6s;
@@ -142,18 +96,23 @@
 .tex-arch--armed .tex-arch-aside { opacity: 1; }
 
 @media (max-width: 720px) {
-  .tex-arch-stage { gap: 28px; max-width: 88vw; }
-  .tex-arch-title { font-size: 21px; }
+  .tex-arch-title { font-size: 20px; margin-bottom: 36px; }
+  .tex-arch-stack { margin-bottom: 36px; max-width: 84vw; }
   .tex-arch-row {
-    grid-template-columns: 32px 1px 1fr auto;
-    gap: 12px;
-    padding: 12px 16px;
+    grid-template-columns: 120px 1fr;
+    gap: 14px;
+    padding: 12px 0;
   }
-  .tex-arch-name { font-size: 15px; }
-  .tex-arch-desc { font-size: 12px; }
-  .tex-arch-aside { font-size: 15px; }
+  .tex-arch-name { font-size: 10px; letter-spacing: 0.12em; }
+  .tex-arch-desc { font-size: 13px; }
+  .tex-arch-aside { font-size: 16px; }
 }
 
 @media (max-width: 420px) {
-  .tex-arch-desc { display: none; }
+  .tex-arch-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    text-align: left;
+  }
+  .tex-arch-desc { text-align: left; }
 }
