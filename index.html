@@ -238,10 +238,12 @@
     letter-spacing: 0.4em; text-indent: 0.4em;
     text-transform: lowercase;
     color: #9b9388;
+    text-decoration: none;
     opacity: 0;
-    transition: opacity 900ms ease;
+    transition: opacity 900ms ease, color 160ms ease;
   }
-  #reveal .tex-mark.show { opacity: 1; }
+  #reveal .tex-mark.show { opacity: 1; pointer-events: auto; cursor: pointer; }
+  #reveal a.tex-mark:hover { color: #5e564c; }
 
 
 
@@ -312,7 +314,7 @@
       <div class="reveal-stack">
         <p class="name-line">I am Tex.</p>
         <p class="head-line">I decide what your agents may do. You will not supervise me.</p>
-        <p class="tex-mark">tex.systems</p>
+        <a class="tex-mark" href="https://www.tex.systems/">tex.systems</a>
       </div>
     </div>
   </div>
@@ -558,6 +560,7 @@
   function restart() { if (!running) run(); }
   document.addEventListener("click", restart);
   again.addEventListener("click", (e) => { e.stopPropagation(); restart(); });
+  texMark.addEventListener("click", (e) => { e.stopPropagation(); });
   document.addEventListener("keydown", (e) => {
     if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); restart(); }
   });
