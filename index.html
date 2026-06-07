@@ -269,23 +269,8 @@
     #again { bottom: max(4vh, env(safe-area-inset-bottom)); }
   }
 
-  /* ---- chrome ---- */
-  #sound {
-    position: fixed; top: 22px; right: 24px;
-    font-family: var(--mono);
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--ink-warm);
-    background: none; border: 0; cursor: pointer;
-    opacity: 0.26;
-    transition: opacity 600ms ease, color 1900ms ease;
-    z-index: 9;
-    display: flex; align-items: center; gap: 7px;
-  }
-  #sound:hover { opacity: 0.7; }
-  #sound .pip { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.35; transition: opacity 300ms ease; }
-  #sound.on .pip { opacity: 1; }
-
-  #again {
+  /* sound removed */
+#again {
     position: fixed; left: 50%; bottom: 5vh; transform: translateX(-50%);
     font-family: var(--mono);
     font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
@@ -305,10 +290,7 @@
 </head>
 <body>
   <h1 class="sr-only">Tex — I decide what your agents may do. You will not supervise me.</h1>
-
-  <button id="sound" aria-label="Toggle sound"><span class="pip"></span><span class="lbl">sound</span></button>
-
-  <div id="stage" aria-hidden="true">
+<div id="stage" aria-hidden="true">
     <div id="dateline" class="layer">February 2026</div>
 
     <div id="scene" class="layer"><div class="copy"></div></div>
@@ -396,7 +378,7 @@
   const headLine = reveal.querySelector(".head-line");
   const texMark = reveal.querySelector(".tex-mark");
   const again = $("again");
-  const soundBtn = $("sound");
+  const soundBtn = null;
 
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const rand = (a, b) => a + Math.random() * (b - a);
@@ -408,25 +390,7 @@
   let soundOn = false;
 
   // ---- sound (off by default; one spoken line, on opt-in) ----
-  function speakTex() {
-    if (!soundOn || !("speechSynthesis" in window)) return;
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance("I am Tex.");
-      u.rate = 0.78; u.pitch = 0.92; u.volume = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const pick = voices.find((v) => /Samantha|Daniel|Serena|Arthur|Google US English|Microsoft/i.test(v.name));
-      if (pick) u.voice = pick;
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
-  }
-  soundBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    soundOn = !soundOn;
-    soundBtn.classList.toggle("on", soundOn);
-    soundBtn.querySelector(".lbl").textContent = soundOn ? "sound on" : "sound";
-    if (soundOn && "speechSynthesis" in window) { try { window.speechSynthesis.getVoices(); } catch (e2) {} }
-  });
+  function speakTex() { return; }
 
   // ---- the wall ----
   function fragHTML(type) {
@@ -599,8 +563,7 @@
   });
 
   // fade the sound affordance down once the piece is underway
-  setTimeout(() => { soundBtn.style.opacity = "0.12"; }, 5200);
-
+  
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(run);
     setTimeout(() => { if (!running && !nameLine.classList.contains("show") && sceneCopy.innerHTML === "") run(); }, 1400);
