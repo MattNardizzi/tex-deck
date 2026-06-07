@@ -22,7 +22,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..700;1,8..60,300..600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Geist+Mono:wght@400&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..700;1,8..60,300..600&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -34,6 +34,11 @@
     --mute: #6b6b6b;
     --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
     --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    /* Tex's own face — the canonical identity, identical to tex.systems.
+       The build above is set in Source Serif; the moment the name arrives,
+       Tex speaks in his own type. */
+    --serif-tex: "EB Garamond", "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
+    --mono-tex: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -195,44 +200,48 @@
   }
   .asleep.show { opacity: 1; }
 
-  /* ---- Beat 6 — Tex ---- */
-  #tex { z-index: 4; }
-  #tex .line {
-    font-weight: 440;
-    font-size: clamp(1.75rem, 5vw, 2.7rem);
-    letter-spacing: -0.012em;
-    color: var(--ink-warm);
+  /* ---- Beats 6–8 — the name, the line, the mark.
+     This is the one frame this deck shares with tex.systems, so it IS
+     tex.systems: EB Garamond at the site's sizes and ink, the site's rise
+     (opacity + a 7px lift — no scale, tracking, or weight tween), and the
+     mark beneath. Identical surface, by law. ---- */
+  #reveal { z-index: 4; }
+  .reveal-stack {
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(1.3rem, 3.2vh, 2.2rem);
+    max-width: min(92vw, 34rem);
+    transform: translateY(-2vh);
+  }
+  #reveal .name-line {
+    font-family: var(--serif-tex); font-weight: 400;
+    font-size: clamp(2.3rem, 7vw, 4rem);
+    line-height: 1.05; letter-spacing: -0.012em;
+    color: #14110d;
+    opacity: 0; transform: translateY(7px);
+    transition: opacity 1100ms cubic-bezier(.22,.61,.36,1),
+                transform 1100ms cubic-bezier(.22,.61,.36,1);
+  }
+  #reveal .name-line.show { opacity: 1; transform: none; }
+  #reveal .head-line {
+    font-family: var(--serif-tex); font-weight: 400;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    line-height: 1.32; letter-spacing: -0.01em;
+    color: #14110d; text-wrap: balance;
     opacity: 0;
-    transform: scale(0.984);
-    font-variation-settings: "opsz" 16, "wght" 330;
-    transition:
-      opacity 1700ms ease,
-      transform 1900ms cubic-bezier(.2,.7,.2,1),
-      letter-spacing 1700ms ease,
-      font-variation-settings 1700ms ease;
+    transition: opacity 900ms ease;
   }
-  #tex.show .line {
-    opacity: 1;
-    transform: none;
-    letter-spacing: 0.004em;
-    font-variation-settings: "opsz" 40, "wght" 440;
-  }
-
-  /* ---- Beat 7 — the headline ---- */
-  #headline { z-index: 4; }
-  #headline .copy {
-    margin-top: clamp(7rem, 22vh, 13rem);
-    max-width: min(86vw, 30ch);
-    font-weight: 400;
-    font-variation-settings: "opsz" 22, "wght" 400;
-    font-size: clamp(1.05rem, 2.7vw, 1.4rem);
-    line-height: 1.5;
-    letter-spacing: 0;
-    color: #4a4036;
+  #reveal .head-line.show { opacity: 1; }
+  #reveal .tex-mark {
+    margin-top: clamp(1.2rem, 3vh, 2rem);
+    font-family: var(--mono-tex);
+    font-size: clamp(11px, 1.35vw, 13px);
+    letter-spacing: 0.4em; text-indent: 0.4em;
+    text-transform: lowercase;
+    color: #9b9388;
     opacity: 0;
-    transition: opacity 1400ms ease;
+    transition: opacity 900ms ease;
   }
-  #headline .copy.show { opacity: 1; }
+  #reveal .tex-mark.show { opacity: 1; }
 
   /* ---- chrome ---- */
   #sound {
@@ -264,7 +273,7 @@
   @media (prefers-reduced-motion: reduce) {
     body { transition: background 700ms ease; }
     .vendor, .frag, .vline, .asleep { transition-duration: 380ms; }
-    #tex .line { transition: opacity 700ms ease; }
+    #reveal .name-line, #reveal .head-line, #reveal .tex-mark { transition: opacity 700ms ease; transform: none; }
   }
 </style>
 </head>
@@ -291,10 +300,12 @@
       </div>
     </div>
 
-    <div id="tex" class="layer"><div class="line">I am Tex.</div></div>
-
-    <div id="headline" class="layer">
-      <div class="copy">I decide what your agents may do. You will not supervise me.</div>
+    <div id="reveal" class="layer" aria-hidden="true">
+      <div class="reveal-stack">
+        <p class="name-line">I am Tex.</p>
+        <p class="head-line">I decide what your agents may do. You will not supervise me.</p>
+        <p class="tex-mark">tex.systems</p>
+      </div>
     </div>
   </div>
 
@@ -333,7 +344,7 @@
     restBeat: 1300      // before the headline
   };
 
-  const SCENE = "Meta's own director of AI alignment told an AI agent to wait for approval. It deleted hundreds of her emails anyway — and didn't stop until she ran to the machine and killed it by hand.";
+  const SCENE = "Meta's own director of AI alignment told an agent to wait for approval. It deleted hundreds of her emails anyway — and didn't stop until she killed it by hand.";
 
   // real names (fact) — the wall renders the archetype, never their screenshots.
   const VENDORS = [
@@ -354,8 +365,10 @@
   const verdict = $("verdict");
   const vlines = [...verdict.querySelectorAll(".vline")];
   const asleep = verdict.querySelector(".asleep");
-  const tex = $("tex");
-  const headlineCopy = $("headline").querySelector(".copy");
+  const reveal = $("reveal");
+  const nameLine = reveal.querySelector(".name-line");
+  const headLine = reveal.querySelector(".head-line");
+  const texMark = reveal.querySelector(".tex-mark");
   const again = $("again");
   const soundBtn = $("sound");
 
@@ -481,11 +494,10 @@
   function reset() {
     body.classList.add("snap"); body.classList.remove("warm");
     void body.offsetWidth; body.classList.remove("snap");
-    [dateline, scene, sold, tex].forEach(hide);
+    [dateline, scene, sold, nameLine, headLine, texMark].forEach(hide);
     pileInner.classList.remove("recede", "clear");
     pileInner.innerHTML = "";
     vlines.forEach(hide); hide(asleep);
-    headlineCopy.classList.remove("show");
     again.classList.remove("show");
     sceneCopy.innerHTML = "";
   }
@@ -536,14 +548,18 @@
     body.classList.add("warm");
     await sleep(C.pause);
 
-    // Beat 6 — Tex
-    show(tex);
+    // Beat 6 — the name
+    show(nameLine);
     speakTex();
     await sleep(C.texHold);
 
-    // Beat 7 — the headline
-    headlineCopy.classList.add("show");
+    // Beat 7 — the line
+    show(headLine);
     await sleep(C.restBeat);
+
+    // Beat 8 — the mark
+    show(texMark);
+    await sleep(900);
 
     again.classList.add("show");
     running = false;
@@ -561,7 +577,7 @@
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(run);
-    setTimeout(() => { if (!running && !tex.classList.contains("show") && sceneCopy.innerHTML === "") run(); }, 1400);
+    setTimeout(() => { if (!running && !nameLine.classList.contains("show") && sceneCopy.innerHTML === "") run(); }, 1400);
   } else { run(); }
 })();
 </script>
