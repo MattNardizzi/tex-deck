@@ -9,8 +9,8 @@ film is one file because the film is one breath.
 **Act I — the fear (clinical white)**
 1. `FEBRUARY 2026` — a documentary dateline, set in mono. This is a true story, and it is dated. (See *Why this is true* below.)
 2. Four lines arrive as rising blows — no typewriter, no animation tricks. Tex doesn't type; Tex decides:
-   - *Meta's director of AI alignment told her agent to wait for approval.*
-   - *It started deleting her inbox.*
+   - *Meta's director of AI alignment told her agent to wait.*
+   - *It deleted her inbox anyway.*
    - *She typed stop. It kept deleting.*
    - *She ran to the machine and killed it by hand.* (full ink — the line that lands)
 3. *So they sold you tools.* → the vendor wall floods in (Zenity, Noma, Pillar, Lasso, Palo Alto, Cisco, CrowdStrike, Astrix, Saviynt…) and accelerates into noise.
@@ -18,7 +18,7 @@ film is one file because the film is one breath.
 
 **Act II — the turn (warm cream)**
 5. Everything clears. The room warms. The longest silence in the piece — longer than is comfortable. That silence is load-bearing; do not cut it.
-6. **I am Tex.** — it arrives small and far (light weight, tight optical size) and *breathes in*, resolving to a fuller, present weight. The name is the only thing in the room.
+6. **I am Tex.** — it arrives the way tex.systems opens it: a single line turning toward you (a slight rise and a whisper of rotation), said once, then resting. The name is the only thing in the room. It does not morph its weight — the weight comes from the silence before it.
 7. The headline: *I decide what your agents may do. You will not supervise me.*
 8. The door, in mono: `tex.systems`.
 
@@ -34,10 +34,13 @@ It is also the cleanest possible proof of the thesis: a human in the loop — ev
 
 ## The type system
 
-Two voices, and only two. This is the same doctrine as Tex's product UI, so the film and the product speak as one being.
+Three roles, drawn straight from the product so the film and tex.systems speak as one being.
 
-- **Source Serif 4** carries meaning — the verdict, the name, the declaration. It's a contemporary variable serif (optical-size and weight axes), so it reads as authoritative and present rather than literary. It is the *only* reason the name can breathe: "I am Tex." animates from `opsz 14 / wght 300` (small, far, light) to `opsz 48 / wght 470` (present, full, here). A static book face cannot do that. (An earlier edit swapped in EB Garamond and the name stopped breathing and the voice went soft — that was the regression. Source Serif 4 is the fix, and it matches the product.)
-- **Mono** carries objects — the dateline and the `tex.systems` door. Facts and identifiers are set in mono; meaning is spoken in serif. The screen never lets an object pretend to be a voice.
+- **EB Garamond** is Tex's voice. It is the exact face the product speaks in — chosen on purpose, a revival of Claude Garamont's 1592 letterforms — and so it carries everything that is *Tex or the human truth*: the Act I story, the verdict hammer, and the name. `I am Tex.` is set to the product's door-line spec exactly: EB Garamond 400 at 58px, tracking −0.015em, warm ink (#14110d) on paper (#fcfbf9). The verdict is the same face pushed to a heavy display weight (≈620) — Garamond at size, tracked tight, reads as a statement, not a chapbook. (An earlier pass briefly swapped this for Source Serif 4 with a weight-morph "breath." It diverged from the product. The product's face won, because a pitch film must speak in the product's actual voice.)
+- **Geist Mono** carries objects — the `FEBRUARY 2026` dateline and the `tex.systems` door. Facts and identifiers are mono; meaning is spoken in serif. The screen never lets an object pretend to be a voice.
+- **Geist** (sans) is the machine's voice, used for one thing only: the swarm of vendor names in the wall. The tools do not get Tex's serif. That is the point of the turn — after a field of cold sans logos and dead mono dashboards, the first warm serif voice in the whole film is Tex.
+
+All three are the product's own fonts. Nothing here is invented for the deck.
 
 ## The wall
 
@@ -52,9 +55,9 @@ observability dashboard, and the wall must not blur that line.
 Open `index.html` and find the `C` config object near the top of the `<script>`.
 Every value is in milliseconds. The film lives and dies on its silences, not its motion:
 
-- `pause` — the silence before the name in Act II. This is the most important number in the file. Make it longer than feels comfortable; it currently sits at 2700ms.
-- `coldHold` — how long the kill line sits before Act I releases. Do not rush this.
-- `beforeBlow` — the held breath before "She ran to the machine."
+- `pause` — the silence before the name in Act II. This is the most important number in the file, and the longest beat in the film; it sits at 2900ms. Make it longer than feels comfortable.
+- `coldHold` — how long the kill line sits before Act I releases (2200ms). It lands and holds, then lets go — it no longer stalls.
+- `cold0` / `cold1` / `beforeBlow` — the gaps between the four Act I blows. Kept short so the story escalates instead of dripping.
 - `texHold` — how long "I am Tex." rests in the room it just entered.
 
 A reduced-motion config is provided automatically for visitors who request it.

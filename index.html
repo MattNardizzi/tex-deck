@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Tex</title>
 <meta name="description" content="Everything else watches. Tex decides." />
-<meta name="theme-color" content="#faf8f3" />
+<meta name="theme-color" content="#fcfbf9" />
 <meta name="robots" content="noindex, nofollow" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23faf8f3'/%3E%3Ctext x='16' y='24' font-family='Georgia, serif' font-size='22' text-anchor='middle' fill='%231a1510'%3ET%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='7' fill='%231d1a17'/%3E%3Ctext x='16' y='23.6' text-anchor='middle' font-family='Georgia, serif' font-weight='500' font-size='22' fill='%23faf8f3'%3ET%3C/text%3E%3C/svg%3E" />
 
 <!-- the link preview is the first frame -->
 <meta property="og:title" content="I am Tex." />
@@ -22,18 +22,21 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..700;1,8..60,300..600&display=swap" rel="stylesheet" />
+<!-- The voice: EB Garamond — the exact face Tex speaks in at tex.systems. The film and the product are one being. -->
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Geist:wght@300..600&family=Geist+Mono:wght@400..500&display=swap" rel="stylesheet" />
 
 <style>
   :root {
     --cold: #ffffff;     /* the era of tools */
-    --warm: #faf8f3;     /* the moment Tex speaks */
+    --warm: #fcfbf9;     /* the moment Tex speaks — tex.systems paper */
     --ink:  #0a0a0a;     /* the verdict */
     --ink-grave: #141414;/* the true story */
-    --ink-warm: #1a1510; /* Tex */
+    --ink-warm: #14110d; /* Tex — tex.systems ink */
+    --ink-soft: #5e564c; /* warm soft ink, for the law */
     --mute: #6b6b6b;
-    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-    --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    --serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    --mono: "Geist Mono", "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -93,15 +96,15 @@
   }
   .cline {
     font-family: var(--serif);
-    font-weight: 440;
-    font-variation-settings: "opsz" 36, "wght" 440;
-    font-size: clamp(1.5rem, 4.2vw, 2.55rem);
-    line-height: 1.28;
-    letter-spacing: -0.012em;
+    font-weight: 450;
+    font-variation-settings: "wght" 450;
+    font-size: clamp(1.55rem, 4.3vw, 2.6rem);
+    line-height: 1.26;
+    letter-spacing: -0.014em;
     color: var(--ink-grave);
     opacity: 0;
     transform: translateY(12px);
-    transition: opacity 820ms ease, transform 900ms cubic-bezier(.2,.8,.2,1);
+    transition: opacity 760ms ease, transform 820ms cubic-bezier(.2,.8,.2,1);
   }
   .cline.show { opacity: 1; transform: none; }
   .cline.blow { color: var(--ink); }   /* the image lands the hardest */
@@ -115,10 +118,10 @@
   #sold.show { opacity: 1; }
   #sold .copy {
     font-family: var(--serif);
-    font-weight: 420;
-    font-variation-settings: "opsz" 30, "wght" 420;
-    font-size: clamp(1.3rem, 3.4vw, 2rem);
-    letter-spacing: -0.01em;
+    font-weight: 450;
+    font-variation-settings: "wght" 450;
+    font-size: clamp(1.35rem, 3.5vw, 2.05rem);
+    letter-spacing: -0.012em;
     color: var(--mute);
   }
 
@@ -136,8 +139,9 @@
   .vendor {
     position: absolute;
     white-space: nowrap;
-    font-weight: 520;
-    letter-spacing: -0.012em;
+    font-family: var(--sans);
+    font-weight: 500;
+    letter-spacing: -0.01em;
     transform: translate(-50%, -50%) rotate(var(--r)) scale(0.9);
     transform-origin: center;
     opacity: 0;
@@ -176,79 +180,84 @@
   .vstack { display: flex; flex-direction: column; align-items: center; }
   .vline {
     font-family: var(--serif);
-    font-weight: 560;
-    font-variation-settings: "opsz" 56, "wght" 560;
-    font-size: clamp(1.95rem, 6.1vw, 4.05rem);
-    line-height: 1.1;
-    letter-spacing: -0.028em;
+    font-weight: 620;
+    font-variation-settings: "wght" 620;
+    font-size: clamp(2rem, 6.2vw, 4.1rem);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
     color: var(--ink);
     opacity: 0;
     transform: translateY(13px);
-    transition: opacity 760ms ease, transform 760ms cubic-bezier(.2,.8,.2,1);
+    transition: opacity 720ms ease, transform 720ms cubic-bezier(.2,.8,.2,1);
   }
   .vline.show { opacity: 1; transform: none; }
   .asleep {
     margin-top: clamp(1.4rem, 4vh, 2.6rem);
     font-family: var(--serif);
     font-style: italic;
-    font-weight: 400;
-    font-variation-settings: "opsz" 22, "wght" 400;
-    font-size: clamp(1.2rem, 3.2vw, 1.9rem);
-    letter-spacing: -0.004em;
+    font-weight: 450;
+    font-variation-settings: "wght" 450;
+    font-size: clamp(1.25rem, 3.3vw, 1.95rem);
+    letter-spacing: -0.006em;
     color: #585858;
     opacity: 0;
     transition: opacity 950ms ease;
   }
   .asleep.show { opacity: 1; }
 
-  /* ---- Beat 6 — Tex ---- */
+  /* ---- Beat 6 — Tex. This is the product's door-line, exactly: EB Garamond
+     400 at 58px, tracking -0.015em, warm ink on paper. It does not morph its
+     weight — it arrives the way tex.systems opens it: a single line turning
+     toward you (translateY + a whisper of rotateX), said once, and rests. The
+     impact is the silence before it and the weight of the verb, not motion. */
   #tex { z-index: 4; }
   #tex .line {
     font-family: var(--serif);
-    font-size: clamp(2.2rem, 7.6vw, 3.6rem);
+    font-weight: 400;
+    font-variation-settings: "wght" 400;
+    font-size: clamp(22px, 7.3vw, 58px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
     color: var(--ink-warm);
+    white-space: nowrap;
+    transform-origin: 50% 0;
     opacity: 0;
-    transform: scale(0.978);
-    letter-spacing: -0.014em;
-    font-variation-settings: "opsz" 14, "wght" 300;
+    transform: translateY(10px) rotateX(7deg);
     transition:
-      opacity 1800ms ease,
-      transform 2000ms cubic-bezier(.2,.7,.2,1),
-      letter-spacing 1800ms ease,
-      font-variation-settings 1800ms ease;
+      opacity 1050ms cubic-bezier(.22,.61,.36,1),
+      transform 1200ms cubic-bezier(.22,.61,.36,1);
   }
   #tex.show .line {
     opacity: 1;
-    transform: none;
-    letter-spacing: 0.012em;
-    font-variation-settings: "opsz" 48, "wght" 470;
+    transform: translateY(0) rotateX(0deg);
   }
 
   /* ---- Beat 7 — the headline, then the one door ---- */
   #headline { z-index: 4; }
   .hstack {
-    margin-top: clamp(7rem, 22vh, 13rem);
+    margin-top: clamp(4.5rem, 15vh, 8.5rem);
     display: flex; flex-direction: column; align-items: center;
-    gap: clamp(1.5rem, 4.5vh, 2.4rem);
+    gap: clamp(1.9rem, 5.2vh, 3rem);
   }
   #headline .copy {
-    max-width: min(86vw, 30ch);
+    max-width: min(92vw, 24ch);
     font-family: var(--serif);
-    font-weight: 400;
-    font-variation-settings: "opsz" 18, "wght" 400;
-    font-size: clamp(1.08rem, 2.7vw, 1.42rem);
-    line-height: 1.5;
-    letter-spacing: 0.002em;
-    color: #4a4036;
+    font-weight: 470;
+    font-variation-settings: "wght" 470;
+    font-size: clamp(1.6rem, 4.4vw, 2.7rem);
+    line-height: 1.26;
+    letter-spacing: -0.012em;
+    color: #241e17;
+    text-wrap: balance;
     opacity: 0;
     transition: opacity 1500ms ease;
   }
   #headline .copy.show { opacity: 1; }
   .door {
     font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.28em;
-    text-indent: 0.28em;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
     color: var(--ink-warm);
     text-decoration: none;
     opacity: 0;
@@ -256,8 +265,8 @@
     pointer-events: auto;
     cursor: pointer;
   }
-  .door.show { opacity: 0.56; }
-  .door:hover { opacity: 0.8; }
+  .door.show { opacity: 0.6; }
+  .door:hover { opacity: 0.85; }
 
   /* ---- chrome ---- */
   #again {
@@ -274,7 +283,8 @@
   @media (prefers-reduced-motion: reduce) {
     body { transition: background 700ms ease; }
     .vendor, .frag, .cline, .vline, .asleep { transition-duration: 380ms; }
-    #tex .line { transition: opacity 700ms ease; }
+    #tex .line { transition: opacity 700ms ease; transform: none; }
+    #tex.show .line { transform: none; }
   }
 </style>
 </head>
@@ -286,8 +296,8 @@
 
     <div id="scene" class="layer">
       <div class="cold-story">
-        <p class="cline">Meta's director of AI alignment told her agent to wait for approval.</p>
-        <p class="cline">It started deleting her inbox.</p>
+        <p class="cline">Meta's director of AI alignment told her agent to wait.</p>
+        <p class="cline">It deleted her inbox anyway.</p>
         <p class="cline">She typed stop. It kept deleting.</p>
         <p class="cline blow">She ran to the machine and killed it by hand.</p>
       </div>
@@ -318,7 +328,7 @@
 
   <div id="again">again</div>
 
-  <noscript><div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#faf8f3;color:#1a1510;font-family:Georgia,serif;font-size:1.9rem;letter-spacing:0.01em">I am Tex.</div></noscript>
+  <noscript><div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fcfbf9;color:#14110d;font-family:'EB Garamond',Georgia,serif;font-size:2.4rem;letter-spacing:-0.015em">I am Tex.</div></noscript>
 
 <script>
 (() => {
@@ -335,22 +345,22 @@
     pause: 1300, texHold: 1700, restBeat: 900, doorBeat: 500
   } : {
     preHold: 600,
-    dateHold: 1300,     // the documentary dateline holds
-    gap: 700,
-    cold0: 1200,        // after the setup — the irony of the title lands
-    cold1: 1250,        // after "It started deleting her inbox."
-    beforeBlow: 1700,   // THE pause — before "she ran to the machine"
-    coldHold: 3000,     // the kill sits. do not rush this.
-    sceneOut: 850,
-    soldHold: 1500,     // "So they sold you tools."
-    pilePeak: 750,      // the wall at full density
-    verdictGap: 880,    // between the three verdict lines
-    beforeAsleep: 1150, // the beat before the coda
-    asleepHold: 1750,   // "The human was asleep."
+    dateHold: 1150,     // the documentary dateline holds
+    gap: 650,
+    cold0: 1000,        // after the setup — the irony lands, then move
+    cold1: 1000,        // after "It deleted her inbox anyway."
+    beforeBlow: 1150,   // the held breath before the kill — not a stall
+    coldHold: 2200,     // the kill lands and sits, then releases
+    sceneOut: 800,
+    soldHold: 1350,     // "So they sold you tools."
+    pilePeak: 700,      // the wall at full density
+    verdictGap: 820,    // between the three verdict lines
+    beforeAsleep: 1100, // the beat before the coda
+    asleepHold: 1650,   // "The human was asleep."
     clearDur: 1050,     // everything dissolves
-    pause: 2700,        // THE silence — the inhale before the name. longer than is comfortable.
-    texHold: 2600,      // "I am Tex." rests in the room it just entered
-    restBeat: 1450,     // before the headline
+    pause: 2900,        // THE silence — the inhale before the name. the longest beat in the film.
+    texHold: 2500,      // "I am Tex." rests in the room it just entered
+    restBeat: 1300,     // before the law
     doorBeat: 1100      // before the one door appears
   };
 
