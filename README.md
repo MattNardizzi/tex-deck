@@ -1,52 +1,44 @@
-# Tex Deck
+# Tex — the open (Acts I–II)
 
-The investor deck for Tex by VortexBlack. Lives at **tex-deck.com**.
+A single self-contained `index.html`. No build step, no dependencies. Deploys
+anywhere instantly and renders identically when you send the link.
 
-Nine slides. One screen at a time. No scroll.
+## The sequence
+**Act I — the fear (clinical white)**
+1. `FEBRUARY 2026` — a documentary dateline. This is a true story.
+2. The scene, typed slowly: *An AI agent deleted hundreds of emails while its owner watched. It stopped when someone cut the power.*
+3. *So they sold you tools.* → the vendor wall floods in (Zenity, Noma, Pillar, Lasso, Palo Alto, Cisco, CrowdStrike…) and accelerates into noise.
+4. The verdict over the noise: *It found the agent. It scored the risk. It waited for a human.* → *The human was asleep.*
 
-## What's inside
+**Act II — the turn (warm cream)**
+5. Everything clears. The room warms. The longest silence in the piece.
+6. **I am Tex.** — small, calm, breathing in on the variable font.
+7. The headline: *I decide what your agents may do. You will not supervise me.*
 
-- Same Source Serif 4 + Inter type system as texaegis.com
-- Same `--tex-paper` / `--tex-ink` palette, same `--tex-glass-*` tokens
-- The "Absolute." cover is the verbatim Hero SVG from the main site —
-  font-size 186, letter-spacing -11, four-layer glass gradient with
-  the same 7-second sweep
-- The breathing Orb component is lifted directly from `components/Orb`
-  — five layers, 4.2s breath cycle, quiet/asking/proof states
-- Slide-by-slide: arrow keys / space / click / swipe
+Auto-plays on load. Click anywhere (or press Space) to replay.
 
-## Run locally
+## Deploy to texdeck.com on Vercel
+1. `vercel.com/new` → drag this folder in → Deploy. (Or `npx vercel` then `npx vercel --prod`.)
+2. Project → Settings → Domains → add `texdeck.com`.
+Static site, no settings needed. `og.png` ships in the folder, so the link preview
+resolves at `https://texdeck.com/og.png` once the domain is live.
 
-```bash
-npm install
-npm run dev
-```
+## Tuning the pace
+Open `index.html`, find the `C` config object near the top of the `<script>`.
+Every value is in milliseconds. The one that matters most is `pause` — the silence
+before the name. Make it longer than feels comfortable. `perChar` controls how
+slowly the true story types.
 
-Open http://localhost:5173.
+## Sound
+Off by default — the piece is complete in silence; the voice is the typography and
+the timing. The faint `sound` toggle (top-right) opts in: when on, a single spoken
+line ("I am Tex.") breaks the silence at the reveal, via the browser's built-in
+speech. For a premium voice, replace `speakTex()` with a hosted neural-TTS clip.
 
-## Navigate the deck
+## The wall
+Renders the dashboard *archetype* — real vendor names (fact) over archetypal panels
+(risk scores, agent counts, alert feeds). It deliberately does **not** paste
+competitors' screenshots: legally clean, timeless, and on your stage, not theirs.
 
-- `→` `↓` `Space` `PageDown` — next
-- `←` `↑` `PageUp` — back
-- `Home` / `End` — first / last
-- Click anywhere on the slide — next
-- Swipe left/right on mobile
-
-## Deploy to Vercel
-
-1. Push this folder to a new GitHub repo
-2. `vercel.com` → New Project → Import the repo
-3. Framework preset: **Vite** (auto-detected). Leave everything default.
-4. After first deploy, go to Project Settings → Domains → add `tex-deck.com`
-5. Vercel gives you DNS records (an `A` and a `CNAME`) — paste those at
-   wherever you bought the domain (Namecheap, GoDaddy, Cloudflare, etc.)
-6. Wait ~5 minutes for DNS to propagate. Done.
-
-Future pushes to `main` redeploy automatically.
-
-## Edit a slide
-
-Each slide is its own file under `src/slides/`. Open the one you want
-to change — copy lives in the JSX, motion timing lives in the CSS.
-
-The slide order is in `src/App.jsx` in the `SLIDES` array.
+## Next (not in this file yet)
+Act III — the proof (one real FORBID, slowly, a sealed hash) — and Act IV — the ask.
