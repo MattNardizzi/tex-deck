@@ -130,7 +130,18 @@
   #pileInner.recede { opacity: 0.16; }
   #pileInner.clear  { opacity: 0; transform: scale(1.06); filter: blur(8px); }
 
-  /* the wall is the watching — undifferentiated glass, no names */
+  .vendor {
+    position: absolute;
+    white-space: nowrap;
+    font-weight: 520;
+    letter-spacing: -0.012em;
+    transform: translate(-50%, -50%) rotate(var(--r)) scale(0.9);
+    transform-origin: center;
+    opacity: 0;
+    transition: opacity 520ms ease, transform 760ms cubic-bezier(.2,.8,.2,1);
+    will-change: opacity, transform;
+  }
+  .vendor.show { opacity: var(--o); transform: translate(-50%, -50%) rotate(var(--r)) scale(1); }
 
   .frag {
     position: absolute;
@@ -161,8 +172,8 @@
   #verdict { z-index: 2; }
   .vstack { display: flex; flex-direction: column; align-items: center; }
   .vline {
-    font-weight: 545;
-    font-variation-settings: "opsz" 44, "wght" 545;
+    font-weight: 480;
+    font-variation-settings: "opsz" 44, "wght" 480;
     font-size: clamp(1.9rem, 6vw, 4rem);
     line-height: 1.12;
     letter-spacing: -0.025em;
@@ -238,8 +249,8 @@
     pointer-events: auto;
     cursor: pointer;
   }
-  .door.show { opacity: 0.42; }
-  .door:hover { opacity: 0.72; }
+  .door.show { opacity: 0.56; }
+  .door:hover { opacity: 0.8; }
 
   /* ---- chrome ---- */
   #again {
@@ -255,7 +266,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     body { transition: background 700ms ease; }
-    .frag, .cline, .vline, .asleep { transition-duration: 380ms; }
+    .vendor, .frag, .cline, .vline, .asleep { transition-duration: 380ms; }
     #tex .line { transition: opacity 700ms ease; }
   }
 </style>
@@ -318,9 +329,9 @@
     preHold: 500,
     dateHold: 1100,     // the dateline holds
     gap: 600,
-    coldGap: 900,       // between the first two cold lines
-    beforeBlow: 1300,   // the pause before "She killed it by hand."
-    coldHold: 1900,     // the three lines sit, and settle
+    coldGap: 1000,      // between the first two cold lines
+    beforeBlow: 1500,   // the pause before "She killed it by hand."
+    coldHold: 3400,     // the three lines sit, and are given time to be read
     sceneOut: 800,
     soldHold: 1400,     // "So they sold you tools."
     pilePeak: 700,      // the wall at full density
@@ -333,6 +344,14 @@
     restBeat: 1300,     // before the headline
     doorBeat: 1100      // before the one door appears
   };
+
+  // real names (fact) — the wall renders the archetype, never their screenshots.
+  const VENDORS = [
+    "Zenity","Noma","Pillar","Lasso","Palo Alto","Cisco","CrowdStrike",
+    "Astrix","Saviynt","Protect AI","Prompt Security","CyberArk",
+    "Robust Intelligence","Keycard","Oasis","Zenity","Noma","Lasso",
+    "Palo Alto","Pillar","+ 40 more"
+  ];
 
   const DOTS = ["#d8a3a3", "#d8bf8a", "#a3c2a3"];
 
@@ -386,33 +405,44 @@
 
   function buildPile() {
     pileInner.innerHTML = "";
-    // more cards now that the names are gone — the wall is the watching, undifferentiated
-    const types = [
-      "risk", "count", "alerts", "chart", "posture", "risk", "alerts", "posture",
-      "chart", "count", "risk", "alerts", "chart", "posture", "risk", "count",
-      "alerts", "chart", "posture", "risk", "count", "alerts"
-    ];
+    const types = ["risk", "count", "alerts", "chart", "posture", "risk", "alerts", "posture", "chart", "count", "risk", "alerts"];
     types.forEach((t) => {
       const f = document.createElement("div");
       f.className = "frag";
       f.style.width = rand(132, 234) + "px";
       f.style.height = rand(80, 150) + "px";
-      f.style.top = rand(8, 92) + "%";
-      f.style.left = rand(8, 92) + "%";
+      f.style.top = rand(10, 90) + "%";
+      f.style.left = rand(10, 90) + "%";
       f.style.setProperty("--r", rand(-6, 6).toFixed(1) + "deg");
       f.innerHTML = fragHTML(t);
       pileInner.appendChild(f);
+    });
+    VENDORS.forEach((name) => {
+      const s = document.createElement("span");
+      s.className = "vendor";
+      s.textContent = name;
+      const size = rand(1.15, 3.3);
+      const g = irand(96, 152);
+      s.style.fontSize = size.toFixed(2) + "rem";
+      s.style.top = rand(12, 88) + "%";
+      s.style.left = rand(10, 90) + "%";
+      s.style.color = "rgb(" + g + "," + g + "," + g + ")";
+      s.style.setProperty("--r", rand(-9, 9).toFixed(1) + "deg");
+      s.style.setProperty("--o", rand(0.5, 0.88).toFixed(2));
+      pileInner.appendChild(s);
     });
   }
 
   function revealPile() {
     return new Promise((resolve) => {
       const frags = [...pileInner.querySelectorAll(".frag")];
-      let t = 120;
-      const startGap = 150, endGap = 34; // gaps shrink -> the watching piles up, accelerating
-      frags.forEach((f, i) => {
-        const gap = startGap + (endGap - startGap) * (i / Math.max(1, frags.length - 1));
-        setTimeout(() => f.classList.add("show"), t);
+      frags.forEach((f, i) => setTimeout(() => f.classList.add("show"), 80 + i * 60));
+      const vs = [...pileInner.querySelectorAll(".vendor")];
+      let t = 320;
+      const startGap = 230, endGap = 42; // gaps shrink -> piling up, accelerating
+      vs.forEach((v, i) => {
+        const gap = startGap + (endGap - startGap) * (i / Math.max(1, vs.length - 1));
+        setTimeout(() => v.classList.add("show"), t);
         t += gap;
       });
       setTimeout(resolve, t + 260);
