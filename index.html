@@ -79,31 +79,31 @@
   }
   #dateline.show { opacity: 1; }
 
-  /* ---- Beat 1 — the true story (typed) ---- */
+  /* ---- Beat 1 — the true story (three blows, no typewriter) ---- */
   #scene {
     z-index: 3;
     opacity: 0;
     transition: opacity 800ms ease;
   }
   #scene.show { opacity: 1; }
-  #scene .copy {
-    max-width: min(86vw, 760px);
+  .cold-story {
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(0.7rem, 2.2vh, 1.25rem);
+    max-width: min(86vw, 720px);
+  }
+  .cline {
     font-weight: 430;
     font-variation-settings: "opsz" 32, "wght" 430;
     font-size: clamp(1.45rem, 4.1vw, 2.45rem);
-    line-height: 1.42;
+    line-height: 1.3;
     letter-spacing: -0.004em;
     color: var(--ink-grave);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 760ms ease, transform 760ms cubic-bezier(.2,.8,.2,1);
   }
-  #scene .caret {
-    display: inline-block;
-    width: 2px; height: 0.98em;
-    background: var(--ink-grave);
-    margin-left: 3px;
-    transform: translateY(0.13em);
-    animation: blink 1.05s steps(1) infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
+  .cline.show { opacity: 1; transform: none; }
+  .cline.blow { color: var(--ink); }   /* the image lands the hardest */
 
   /* ---- Beat 2 — the resignation line ---- */
   #sold {
@@ -130,18 +130,7 @@
   #pileInner.recede { opacity: 0.16; }
   #pileInner.clear  { opacity: 0; transform: scale(1.06); filter: blur(8px); }
 
-  .vendor {
-    position: absolute;
-    white-space: nowrap;
-    font-weight: 520;
-    letter-spacing: -0.012em;
-    transform: translate(-50%, -50%) rotate(var(--r)) scale(0.9);
-    transform-origin: center;
-    opacity: 0;
-    transition: opacity 520ms ease, transform 760ms cubic-bezier(.2,.8,.2,1);
-    will-change: opacity, transform;
-  }
-  .vendor.show { opacity: var(--o); transform: translate(-50%, -50%) rotate(var(--r)) scale(1); }
+  /* the wall is the watching — undifferentiated glass, no names */
 
   .frag {
     position: absolute;
@@ -218,10 +207,14 @@
     font-variation-settings: "wght" 400;
   }
 
-  /* ---- Beat 7 — the headline ---- */
+  /* ---- Beat 7 — the headline, then the one door ---- */
   #headline { z-index: 4; }
-  #headline .copy {
+  .hstack {
     margin-top: clamp(7rem, 22vh, 13rem);
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(1.5rem, 4.5vh, 2.4rem);
+  }
+  #headline .copy {
     max-width: min(86vw, 30ch);
     font-weight: 400;
     font-variation-settings: "opsz" 22, "wght" 400;
@@ -233,37 +226,36 @@
     transition: opacity 1400ms ease;
   }
   #headline .copy.show { opacity: 1; }
+  .door {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+    color: var(--ink-warm);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 1100ms ease;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .door.show { opacity: 0.42; }
+  .door:hover { opacity: 0.72; }
 
   /* ---- chrome ---- */
-  #sound {
-    position: fixed; top: 22px; right: 24px;
-    font-family: var(--mono);
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--ink-warm);
-    background: none; border: 0; cursor: pointer;
-    opacity: 0.26;
-    transition: opacity 600ms ease, color 1900ms ease;
-    z-index: 9;
-    display: flex; align-items: center; gap: 7px;
-  }
-  #sound:hover { opacity: 0.7; }
-  #sound .pip { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.35; transition: opacity 300ms ease; }
-  #sound.on .pip { opacity: 1; }
-
   #again {
     position: fixed; left: 50%; bottom: 5vh; transform: translateX(-50%);
     font-family: var(--mono);
-    font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--ink-warm);
     opacity: 0; transition: opacity 900ms ease;
     cursor: pointer; z-index: 9;
   }
-  #again.show { opacity: 0.3; }
-  #again:hover { opacity: 0.6; }
+  #again.show { opacity: 0.2; }
+  #again:hover { opacity: 0.45; }
 
   @media (prefers-reduced-motion: reduce) {
     body { transition: background 700ms ease; }
-    .vendor, .frag, .vline, .asleep { transition-duration: 380ms; }
+    .frag, .cline, .vline, .asleep { transition-duration: 380ms; }
     #tex .line { transition: opacity 700ms ease; }
   }
 </style>
@@ -271,12 +263,16 @@
 <body>
   <h1 class="sr-only">Tex — I decide what your agents may do. You will not supervise me.</h1>
 
-  <button id="sound" aria-label="Toggle sound"><span class="pip"></span><span class="lbl">sound</span></button>
-
   <div id="stage" aria-hidden="true">
     <div id="dateline" class="layer">February 2026</div>
 
-    <div id="scene" class="layer"><div class="copy"></div></div>
+    <div id="scene" class="layer">
+      <div class="cold-story">
+        <p class="cline">It was told to wait for approval.</p>
+        <p class="cline">It deleted everything anyway.</p>
+        <p class="cline blow">She killed it by hand.</p>
+      </div>
+    </div>
 
     <div id="sold" class="layer"><div class="copy">So they sold you tools.</div></div>
 
@@ -294,7 +290,10 @@
     <div id="tex" class="layer"><div class="line">I am Tex.</div></div>
 
     <div id="headline" class="layer">
-      <div class="copy">I decide what your agents may do. You will not supervise me.</div>
+      <div class="hstack">
+        <div class="copy">I decide what your agents may do. You will not supervise me.</div>
+        <a class="door" href="https://tex.systems">tex.systems</a>
+      </div>
     </div>
   </div>
 
@@ -311,16 +310,17 @@
   // ---- pacing. one block. all ms. the most important dial is `pause`. ----
   const C = RM ? {
     preHold: 300, dateHold: 900, gap: 300,
-    perChar: 0, sceneHold: 1500, sceneOut: 300,
+    coldGap: 350, beforeBlow: 450, coldHold: 1200, sceneOut: 300,
     soldHold: 1000,
     pilePeak: 500, verdictGap: 460, beforeAsleep: 600, asleepHold: 1200, clearDur: 500,
-    pause: 1300, texHold: 1700, restBeat: 900
+    pause: 1300, texHold: 1700, restBeat: 900, doorBeat: 500
   } : {
     preHold: 500,
     dateHold: 1100,     // the dateline holds
     gap: 600,
-    perChar: 26,        // typing speed of the true story
-    sceneHold: 2200,    // the story sits with you
+    coldGap: 900,       // between the first two cold lines
+    beforeBlow: 1300,   // the pause before "She killed it by hand."
+    coldHold: 1900,     // the three lines sit, and settle
     sceneOut: 800,
     soldHold: 1400,     // "So they sold you tools."
     pilePeak: 700,      // the wall at full density
@@ -330,25 +330,16 @@
     clearDur: 1000,     // everything dissolves
     pause: 2500,        // THE silence — the inhale before the name
     texHold: 2400,      // "I am Tex." rests
-    restBeat: 1300      // before the headline
+    restBeat: 1300,     // before the headline
+    doorBeat: 1100      // before the one door appears
   };
-
-  const SCENE = "Meta's own director of AI alignment told an AI agent to wait for approval. It deleted hundreds of her emails anyway — and didn't stop until she ran to the machine and killed it by hand.";
-
-  // real names (fact) — the wall renders the archetype, never their screenshots.
-  const VENDORS = [
-    "Zenity","Noma","Pillar","Lasso","Palo Alto","Cisco","CrowdStrike",
-    "Astrix","Saviynt","Protect AI","Prompt Security","CyberArk",
-    "Robust Intelligence","Keycard","Oasis","Zenity","Noma","Lasso",
-    "Palo Alto","Pillar","+ 40 more"
-  ];
 
   const DOTS = ["#d8a3a3", "#d8bf8a", "#a3c2a3"];
 
   const $ = (id) => document.getElementById(id);
   const body = document.body;
   const dateline = $("dateline");
-  const scene = $("scene"), sceneCopy = scene.querySelector(".copy");
+  const scene = $("scene"), clines = [...scene.querySelectorAll(".cline")];
   const sold = $("sold");
   const pileInner = $("pileInner");
   const verdict = $("verdict");
@@ -356,8 +347,8 @@
   const asleep = verdict.querySelector(".asleep");
   const tex = $("tex");
   const headlineCopy = $("headline").querySelector(".copy");
+  const door = $("headline").querySelector(".door");
   const again = $("again");
-  const soundBtn = $("sound");
 
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const rand = (a, b) => a + Math.random() * (b - a);
@@ -366,28 +357,8 @@
   const hide = (el) => el.classList.remove("show");
 
   let running = false;
-  let soundOn = false;
 
-  // ---- sound (off by default; one spoken line, on opt-in) ----
-  function speakTex() {
-    if (!soundOn || !("speechSynthesis" in window)) return;
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance("I am Tex.");
-      u.rate = 0.78; u.pitch = 0.92; u.volume = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const pick = voices.find((v) => /Samantha|Daniel|Serena|Arthur|Google US English|Microsoft/i.test(v.name));
-      if (pick) u.voice = pick;
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
-  }
-  soundBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    soundOn = !soundOn;
-    soundBtn.classList.toggle("on", soundOn);
-    soundBtn.querySelector(".lbl").textContent = soundOn ? "sound on" : "sound";
-    if (soundOn && "speechSynthesis" in window) { try { window.speechSynthesis.getVoices(); } catch (e2) {} }
-  });
+  // the film plays silent — no sound control, no chrome but a quiet replay
 
   // ---- the wall ----
   function fragHTML(type) {
@@ -415,79 +386,52 @@
 
   function buildPile() {
     pileInner.innerHTML = "";
-    const types = ["risk", "count", "alerts", "chart", "posture", "risk", "alerts", "posture", "chart", "count", "risk", "alerts"];
+    // more cards now that the names are gone — the wall is the watching, undifferentiated
+    const types = [
+      "risk", "count", "alerts", "chart", "posture", "risk", "alerts", "posture",
+      "chart", "count", "risk", "alerts", "chart", "posture", "risk", "count",
+      "alerts", "chart", "posture", "risk", "count", "alerts"
+    ];
     types.forEach((t) => {
       const f = document.createElement("div");
       f.className = "frag";
       f.style.width = rand(132, 234) + "px";
       f.style.height = rand(80, 150) + "px";
-      f.style.top = rand(10, 90) + "%";
-      f.style.left = rand(10, 90) + "%";
+      f.style.top = rand(8, 92) + "%";
+      f.style.left = rand(8, 92) + "%";
       f.style.setProperty("--r", rand(-6, 6).toFixed(1) + "deg");
       f.innerHTML = fragHTML(t);
       pileInner.appendChild(f);
-    });
-    VENDORS.forEach((name) => {
-      const s = document.createElement("span");
-      s.className = "vendor";
-      s.textContent = name;
-      const size = rand(1.15, 3.3);
-      const g = irand(96, 152);
-      s.style.fontSize = size.toFixed(2) + "rem";
-      s.style.top = rand(12, 88) + "%";
-      s.style.left = rand(10, 90) + "%";
-      s.style.color = "rgb(" + g + "," + g + "," + g + ")";
-      s.style.setProperty("--r", rand(-9, 9).toFixed(1) + "deg");
-      s.style.setProperty("--o", rand(0.5, 0.88).toFixed(2));
-      pileInner.appendChild(s);
     });
   }
 
   function revealPile() {
     return new Promise((resolve) => {
       const frags = [...pileInner.querySelectorAll(".frag")];
-      frags.forEach((f, i) => setTimeout(() => f.classList.add("show"), 80 + i * 60));
-      const vs = [...pileInner.querySelectorAll(".vendor")];
-      let t = 320;
-      const startGap = 230, endGap = 42; // gaps shrink -> piling up, accelerating
-      vs.forEach((v, i) => {
-        const gap = startGap + (endGap - startGap) * (i / Math.max(1, vs.length - 1));
-        setTimeout(() => v.classList.add("show"), t);
+      let t = 120;
+      const startGap = 150, endGap = 34; // gaps shrink -> the watching piles up, accelerating
+      frags.forEach((f, i) => {
+        const gap = startGap + (endGap - startGap) * (i / Math.max(1, frags.length - 1));
+        setTimeout(() => f.classList.add("show"), t);
         t += gap;
       });
       setTimeout(resolve, t + 260);
     });
   }
 
-  // ---- the true story, typed ----
-  function typeScene() {
-    return new Promise((resolve) => {
-      if (RM || C.perChar === 0) { sceneCopy.innerHTML = "<span>" + SCENE + "</span>"; return resolve(); }
-      sceneCopy.innerHTML = '<span class="typed"></span><span class="caret"></span>';
-      const typed = sceneCopy.querySelector(".typed");
-      let i = 0;
-      (function step() {
-        if (i <= SCENE.length) {
-          typed.textContent = SCENE.slice(0, i);
-          i++;
-          const ch = SCENE[i - 2];
-          const extra = (ch === ".") ? 320 : (ch === "\u2014") ? 300 : (ch === "," ? 150 : 0); // breathe at punctuation
-          setTimeout(step, C.perChar + extra);
-        } else { resolve(); }
-      })();
-    });
-  }
+  // the cold story now arrives as three rising blows — no typing, Tex doesn't type
 
   function reset() {
     body.classList.add("snap"); body.classList.remove("warm");
     void body.offsetWidth; body.classList.remove("snap");
     [dateline, scene, sold, tex].forEach(hide);
+    clines.forEach(hide);
     pileInner.classList.remove("recede", "clear");
     pileInner.innerHTML = "";
     vlines.forEach(hide); hide(asleep);
     headlineCopy.classList.remove("show");
+    door.classList.remove("show");
     again.classList.remove("show");
-    sceneCopy.innerHTML = "";
   }
 
   async function run() {
@@ -502,10 +446,14 @@
     hide(dateline);
     await sleep(C.gap);
 
-    // Beat 1 — the true story
+    // Beat 1 — the true story, three blows
     show(scene);
-    await typeScene();
-    await sleep(C.sceneHold);
+    show(clines[0]);
+    await sleep(C.coldGap);
+    show(clines[1]);
+    await sleep(C.beforeBlow);
+    show(clines[2]);
+    await sleep(C.coldHold);
     hide(scene);
     await sleep(C.sceneOut);
 
@@ -538,12 +486,13 @@
 
     // Beat 6 — Tex
     show(tex);
-    speakTex();
     await sleep(C.texHold);
 
-    // Beat 7 — the headline
+    // Beat 7 — the headline, then the one door
     headlineCopy.classList.add("show");
     await sleep(C.restBeat);
+    door.classList.add("show");
+    await sleep(C.doorBeat);
 
     again.classList.add("show");
     running = false;
@@ -552,16 +501,14 @@
   function restart() { if (!running) run(); }
   document.addEventListener("click", restart);
   again.addEventListener("click", (e) => { e.stopPropagation(); restart(); });
+  door.addEventListener("click", (e) => { e.stopPropagation(); }); // the door leads onward, it does not replay
   document.addEventListener("keydown", (e) => {
     if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); restart(); }
   });
 
-  // fade the sound affordance down once the piece is underway
-  setTimeout(() => { soundBtn.style.opacity = "0.12"; }, 5200);
-
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(run);
-    setTimeout(() => { if (!running && !tex.classList.contains("show") && sceneCopy.innerHTML === "") run(); }, 1400);
+    setTimeout(() => { if (!running && !tex.classList.contains("show") && !clines[0].classList.contains("show")) run(); }, 1400);
   } else { run(); }
 })();
 </script>
