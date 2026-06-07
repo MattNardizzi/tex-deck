@@ -208,9 +208,9 @@
   #reveal { z-index: 4; }
   .reveal-stack {
     display: flex; flex-direction: column; align-items: center;
-    gap: clamp(1.3rem, 3.2vh, 2.2rem);
+    gap: clamp(1rem, 2vh, 1.5rem);
     max-width: min(92vw, 34rem);
-    transform: translateY(-2vh);
+    transform: translateY(3vh);
   }
   #reveal .name-line {
     font-family: var(--serif-tex); font-weight: 400;
@@ -242,6 +242,32 @@
     transition: opacity 900ms ease;
   }
   #reveal .tex-mark.show { opacity: 1; }
+
+
+
+  @media (max-width: 640px) {
+    .reveal-stack {
+      gap: clamp(0.85rem, 1.8vh, 1.1rem);
+      max-width: min(88vw, 24rem);
+      transform: translateY(3.5vh);
+    }
+    #reveal .name-line {
+      font-size: clamp(2.15rem, 12vw, 3.2rem);
+      line-height: 1.02;
+    }
+    #reveal .head-line {
+      font-size: clamp(1.1rem, 5vw, 1.35rem);
+      line-height: 1.28;
+      max-width: 18rem;
+    }
+    #reveal .tex-mark {
+      margin-top: clamp(0.65rem, 1.7vh, 1rem);
+      font-size: 10px;
+      letter-spacing: 0.34em;
+      text-indent: 0.34em;
+    }
+    #again { bottom: max(4vh, env(safe-area-inset-bottom)); }
+  }
 
   /* ---- chrome ---- */
   #sound {
