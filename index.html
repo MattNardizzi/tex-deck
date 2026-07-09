@@ -22,7 +22,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Geist+Mono:wght@400&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..700;1,8..60,300..600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Geist+Mono:wght@400&family=Inter:wght@300&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..700;1,8..60,300..600&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -39,6 +39,9 @@
        Tex speaks in his own type. */
     --serif-tex: "EB Garamond", "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
     --mono-tex: "Geist Mono", "SF Mono", Menlo, Consolas, monospace;
+    /* Tex's spoken voice — Inter Light, matching tex-frontend's name-line.
+       Only the line Tex speaks ("I am Tex.") wears it; narration stays serif. */
+    --voice: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -201,10 +204,10 @@
   .asleep.show { opacity: 1; }
 
   /* ---- Beats 6–8 — the name, the line, the mark.
-     This is the one frame this deck shares with tex.systems, so it IS
-     tex.systems: EB Garamond at the site's sizes and ink, the site's rise
-     (opacity + a 7px lift — no scale, tracking, or weight tween), and the
-     mark beneath. Identical surface, by law. ---- */
+     The name + support line match tex-frontend exactly: "I am Tex." in Inter
+     Light (Tex's spoken voice), the line beneath in EB Garamond (narration),
+     at the frontend's sizes and ink. The site's rise (opacity + a 7px lift —
+     no scale, tracking, or weight tween) and the mark beneath. ---- */
   #reveal { z-index: 4; }
   .reveal-stack {
     display: flex; flex-direction: column; align-items: center;
@@ -213,9 +216,11 @@
     transform: translateY(3vh);
   }
   #reveal .name-line {
-    font-family: var(--serif-tex); font-weight: 400;
-    font-size: clamp(2.3rem, 7vw, 4rem);
-    line-height: 1.05; letter-spacing: -0.012em;
+    /* "I am Tex." — matched to tex-frontend's name-line: Inter Light at the
+       product-voice clamp, not the old bigger EB Garamond hero cut. */
+    font-family: var(--voice); font-weight: 300;
+    font-size: clamp(33.75px, 3.15vw, 45px);
+    line-height: 1.55; letter-spacing: -0.005em;
     color: #14110d;
     opacity: 0; transform: translateY(7px);
     transition: opacity 1100ms cubic-bezier(.22,.61,.36,1),
@@ -223,10 +228,12 @@
   }
   #reveal .name-line.show { opacity: 1; transform: none; }
   #reveal .head-line {
+    /* the support line under "I am Tex." — matched to tex-frontend's head-line:
+       EB Garamond, stepped down in size + ink so it elaborates beneath the voice. */
     font-family: var(--serif-tex); font-weight: 400;
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    line-height: 1.32; letter-spacing: -0.01em;
-    color: #14110d; text-wrap: balance;
+    font-size: clamp(1.1rem, 2.1vw, 1.35rem);
+    line-height: 1.5; letter-spacing: 0;
+    color: #5e564c; text-wrap: balance;
     opacity: 0;
     transition: opacity 900ms ease;
   }
@@ -238,15 +245,8 @@
       max-width: min(88vw, 24rem);
       transform: translateY(3.5vh);
     }
-    #reveal .name-line {
-      font-size: clamp(2.15rem, 12vw, 3.2rem);
-      line-height: 1.02;
-    }
-    #reveal .head-line {
-      font-size: clamp(1.1rem, 5vw, 1.35rem);
-      line-height: 1.28;
-      max-width: 18rem;
-    }
+    /* name-line + head-line size purely from their clamp()s, exactly as
+       tex-frontend does — no phone-specific resize that would break the match. */
     #again { bottom: max(4vh, env(safe-area-inset-bottom)); }
   }
 
