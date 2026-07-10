@@ -238,6 +238,20 @@
     transition: opacity 900ms ease;
   }
   #reveal .head-line.show { opacity: 1; }
+  #reveal .venue-line {
+    /* the coda dateline — same register as the opening dateline, but warm:
+       where this stops being a deck and becomes a stage. */
+    margin-top: clamp(0.5rem, 1.4vh, 1rem);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-indent: 0.32em;
+    text-transform: uppercase;
+    color: rgba(26, 21, 16, 0.38);
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+  #reveal .venue-line.show { opacity: 1; }
 
   @media (max-width: 640px) {
     .reveal-stack {
@@ -293,6 +307,7 @@
       <div class="reveal-stack">
         <p class="name-line">I am Tex.</p>
         <p class="head-line">I decide what your agents may do. Every ruling I make verifies offline — try to forge one.</p>
+        <p class="venue-line">Presenting at DEF CON 34 · AI Village · Las Vegas · Aug 2026</p>
       </div>
     </div>
   </div>
@@ -356,6 +371,7 @@
   const reveal = $("reveal");
   const nameLine = reveal.querySelector(".name-line");
   const headLine = reveal.querySelector(".head-line");
+  const venueLine = reveal.querySelector(".venue-line");
   const again = $("again");
   const soundBtn = null;
 
@@ -463,7 +479,7 @@
   function reset() {
     body.classList.add("snap"); body.classList.remove("warm");
     void body.offsetWidth; body.classList.remove("snap");
-    [dateline, scene, sold, nameLine, headLine].forEach(hide);
+    [dateline, scene, sold, nameLine, headLine, venueLine].forEach(hide);
     pileInner.classList.remove("recede", "clear");
     pileInner.innerHTML = "";
     vlines.forEach(hide); hide(asleep);
@@ -525,6 +541,7 @@
     // Beat 7 — the line, and the deck rests here
     show(headLine);
     await sleep(C.restBeat);
+    show(venueLine); // the coda dateline: the stage this plays on next
     await sleep(900);
 
     again.classList.add("show");
