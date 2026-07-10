@@ -264,6 +264,21 @@
     #again { bottom: max(4vh, env(safe-area-inset-bottom)); }
   }
 
+  /* The one piece of permanent chrome: the venue, etched at the top edge
+     through every beat — cold acts and warm rest alike. Never animated,
+     never interactive; the piece plays beneath it. */
+  #venueTop {
+    position: fixed; top: 26px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.3em; text-indent: 0.3em; text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(26, 21, 16, 0.34);
+    z-index: 8; pointer-events: none;
+  }
+  @media (max-width: 640px) {
+    #venueTop { top: 18px; font-size: 8.5px; letter-spacing: 0.2em; text-indent: 0.2em; }
+  }
+
   /* sound removed */
 #again {
     position: fixed; left: 50%; bottom: 5vh; transform: translateX(-50%);
@@ -313,6 +328,8 @@
   </div>
 
   <div id="again">again</div>
+
+  <div id="venueTop">Presenting at DEF CON 34 · Las Vegas · Aug 2026</div>
 
   <noscript><div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#faf8f3;color:#1a1510;font-family:Georgia,serif;font-size:1.9rem;letter-spacing:0.01em">I am Tex.</div></noscript>
 
